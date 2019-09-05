@@ -38,4 +38,7 @@ li a:hover {
     text-decoration: underline;
     background-color: #bbb;
 }
+nav {
+    margin-bottom: 1em;
+}
 </style>

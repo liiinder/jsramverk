@@ -2,9 +2,10 @@
 <main>
     <Nav />
     <h2>kmom {{ $route.params.kmom }}</h2>
-    <div class="question" v-for="question in questions" :key="question.key">
-      <p><strong>{{ question.question }}</strong></p>
-      <p>{{ question.answer }}</p>
+    <a :href="github"><strong>Länk till Github repot</strong></a>
+    <div class="readme" v-for="line in readme" :key="line">
+      <p><strong>{{ line.head }}</strong></p>
+      <p>{{ line.text }}</p>
     </div>
 </main>
 
@@ -19,18 +20,37 @@ export default {
   },
   data() {
     return {
-      questions: [
+      github: "https://github.com/liiinder/jsramverk",
+      readme: [
         {
-          key: 1,
-          question: "Hur fungerar det här?",
-          answer: "Jo man kanske kan skriva såhär?"
+          head: "Project setup",
+          text: "npm install"
         },
         {
-          key: 2,
-          question: "Hur fungerar det här?",
-          answer: "Jo man kanske kan skriva såhär?"
+          head: "Compiles and hot-reloads for development",
+          text: "npm run serve"
+        },
+        {
+          head: "Compiles and minifies for production",
+          text: "npm run build"
+        },
+        {
+          head: "Lints and fixes files",
+          text: "npm run lint"
         }
-      ],
+      ]
+      // questions: [
+      //   {
+      //     key: 1,
+      //     question: "Github repo?",
+      //     answer: "Här kan man hitta mitt github repo"
+      //   },
+      //   {
+      //     key: 2,
+      //     question: "Hur fungerar det här?",
+      //     answer: "Jo man kanske kan skriva såhär?"
+      //   }
+      // ],
     }
   }
   // mounted() {
@@ -63,7 +83,13 @@ export default {
 h2 {
   text-transform: uppercase;
 }
-.question {
+
+a {
+  font-size: 2em;
+  color: #bbb;
+}
+
+.readme {
   margin-bottom: 2em;
 }
 </style>
