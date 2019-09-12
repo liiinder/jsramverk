@@ -1,6 +1,10 @@
   
 <template>
   <div id="app" class="app">
+    <link rel="stylesheet" 
+        href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" 
+        integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" 
+        crossorigin="anonymous">
     <router-view></router-view>
   </div>
 </template>
@@ -24,7 +28,7 @@ html {
     font-family: 'Inter UI', sans-serif;
 }
 .app {
-    width: 62em;
+    width: 80vw;
     margin: 0 auto;
     padding: 2em 6em 8em;
     color: white;

@@ -3,12 +3,11 @@
     <Nav />
     <h2>kmom {{ $route.params.kmom }}</h2>
     <a :href="github"><strong>Länk till Github repot</strong></a>
-    <div class="readme" v-for="line in readme" :key="line">
+    <div class="readme" v-for="(line, index) in readme" :key="index">
       <p><strong>{{ line.head }}</strong></p>
       <p>{{ line.text }}</p>
     </div>
 </main>
-
 </template>
 
 <script>
@@ -39,42 +38,8 @@ export default {
           text: "npm run lint"
         }
       ]
-      // questions: [
-      //   {
-      //     key: 1,
-      //     question: "Github repo?",
-      //     answer: "Här kan man hitta mitt github repo"
-      //   },
-      //   {
-      //     key: 2,
-      //     question: "Hur fungerar det här?",
-      //     answer: "Jo man kanske kan skriva såhär?"
-      //   }
-      // ],
     }
   }
-  // mounted() {
-  //   this.getText(this.$route.params.kmom);
-  // },
-  // methods: {
-  //   getText(kmom) {
-  //     let that = this;
-  //     that.text = "";
-  //     fetch("https://me-api.jsramverk.me/reports/" + kmom)
-  //     .then(function(response) {
-  //         return response.json();
-  //     })
-  //     .then(function(result) {
-  //         that.questions = result.data.map((question, index) => {
-  //           return {
-  //             key: index,
-  //             question: question.question,
-  //             answer: question.answer
-  //           };
-  //         });
-  //     });
-  //   }
-  // }
 }
 </script>
 

@@ -1,8 +1,9 @@
 <template>
 <nav>
     <ul>
-        <li><router-link to="/">Me</router-link></li>
-        <li><router-link to="/reports/week/1">kmom01</router-link></li>
+        <li><router-link to="/"><i class="fas fa-home"></i></router-link></li>
+        <li><router-link to="/reports/week/1">Kmom01</router-link></li>
+        <li><router-link to="/register">Registrera</router-link></li>
     </ul>
 </nav>
 </template>
@@ -19,25 +20,35 @@ export default {
 ul {
     list-style-type: none;
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    grid-template-columns: 1fr 1fr 1fr;
 }
+
 li {
-    justify-self: start;
+    justify-self: center;
     margin-right: 1em;
 }
+
 li a {
     text-decoration: none;
     color: white;
     font-size: 1.4em;
     border: 4px solid #0be6d7;
-    background-color: #489ae0;
-    border-radius: 0.5em;
+    background-color: #ddd;
+    color: #333;
+    font-weight: bold;
+    border-radius: 0.15em;
     padding: 0.5em 0.8em;
 }
+
 li a:hover {
     text-decoration: underline;
     background-color: #bbb;
 }
+
+i {
+    background-color: rgba(0, 0, 0, 0.0);
+}
+
 nav {
     margin-bottom: 1em;
 }
