@@ -16,7 +16,9 @@
             id="showPassword"
             :class="showPassword ? 'green' : 'red'"
             v-on:click="showPassword ? showPassword = false : showPassword = true">
-            {{ showPassword ? "Visar" : "Dolt" }} lösenord
+            <!-- {{ showPassword ? "visar" : "dolt" }} -->
+            <i v-if="showPassword" class="fas fa-eye"> visar</i>
+            <i v-else class="fas fa-eye-slash"> dolt</i>
         </button>
         <input :type=" showPassword ? 'text' : 'password' " name="password" id="password" required minlength="8">
         <legend>Födelsedag</legend>
@@ -37,10 +39,10 @@
             <option disabled value="">Dag</option>
             <option v-for="day in getDaysInMonth(selectedYear, selectedMonth)" :key="day" :value="('00' + day).slice(-2)">{{ ("00" + day).slice(-2) }}</option>
         </select><br>
-        <label for="gdrp">Godkänner du att vi inte följer GDRP?</label>
+        <label for="gdrp">Godkänner du att vi inte följer GDPR?</label>
         <button type="button" class="accept" v-on:click="accept ? accept=false : accept=true">
             <i v-if="accept" class="fas fa-check"></i>
-            <i v-if="accept==false" class="fas fa-square-full"></i>
+            <i v-else class="fas fa-square-full"></i>
             <input type="checkbox" class="hidden" required :value="accept" v-bind:checked="accept" tabindex="-1">
         </button>
         <input type="submit" value="Registrera"><br>
@@ -72,7 +74,6 @@ export default {
         selectedMonth: '',
         selectedDay: '',
         accept: false,
-        testing: ''
     }
   }
 }
@@ -158,7 +159,7 @@ i {
     left: 0;
     float: left;
     z-index: 1;
-    background-color: #fff;
+    background-color: rgba(0, 0, 0, 0);
     font-size: 1.0em;
 }
 
@@ -173,7 +174,6 @@ legend {
     z-index: -1;
     width: 1px;
     height: 1px;
-    /* float: left; */
 }
 
 </style>

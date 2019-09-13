@@ -1,17 +1,15 @@
 <template>
 <nav>
     <ul>
-        <li><router-link to="/"><i class="fas fa-home"></i></router-link></li>
-        <li><router-link to="/reports">Redovisningar</router-link></li>
-        <li><router-link to="/register">Registrera</router-link></li>
+        <li><router-link v-for="n in 7" :key="n" :to="'/reports/week/'+n">Kmom{{ ('00' + (n)).slice(-2) }}</router-link></li>
     </ul>
 </nav>
 </template>
 
 <script>
 export default {
-    name: 'Nav',
-    props: { }
+  name: 'ReportNav',
+  props: { }
 }
 </script>
 
@@ -20,12 +18,13 @@ export default {
 ul {
     list-style-type: none;
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: 1fr;
+    grid-gap: 0.5em;
 }
 
 li {
     justify-self: center;
-    margin-right: 1em;
+    margin: 1.5em 0;
 }
 
 li a {
@@ -37,7 +36,7 @@ li a {
     color: #333;
     font-weight: bold;
     border-radius: 0.15em;
-    padding: 0.5em 0.8em;
+    padding: 0.5em 0.7em;
 }
 
 li a:hover {
