@@ -1,9 +1,10 @@
 <template>
 <nav>
     <ul>
-        <li><router-link to="/"><i class="fas fa-home"></i></router-link></li>
-        <li><router-link to="/reports">Redovisningar</router-link></li>
+        <li><router-link to="/"><i class="fas fa-home" alt="Home"></i></router-link></li>
+        <li><router-link to="/reports/week/0">Redovisningar</router-link></li>
         <li><router-link to="/register">Registrera</router-link></li>
+        <li><router-link to="/login">Logga in</router-link></li>
     </ul>
 </nav>
 </template>
@@ -20,7 +21,7 @@ export default {
 ul {
     list-style-type: none;
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
 }
 
 li {
@@ -50,6 +51,6 @@ i {
 }
 
 nav {
-    margin-bottom: 1em;
+    margin-bottom: 2em;
 }
 </style>

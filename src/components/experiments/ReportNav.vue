@@ -1,8 +1,6 @@
 <template>
 <nav>
-    <ul>
-        <li><router-link v-for="n in 7" :key="n" :to="'/reports/week/'+n">Kmom{{ ('00' + (n)).slice(-2) }}</router-link></li>
-    </ul>
+
 </nav>
 </template>
 

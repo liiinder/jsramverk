@@ -5,26 +5,35 @@
     <p>
         Som registrerad får du tillgång till att lägga upp redovisningar på denna me-sida!
     </p>
-    <form>
+    <form @submit.prevent="submitForm">
         <legend for="name">Namn</legend>
-        <input type="text" name="name" required minlength="2">
+        <input type="text" name="name" v-model="name" required minlength="2">
         <legend for="email">Email</legend>
-        <input type="email" name="email" required>
+        <input type="email" name="email" v-model="email" required>
         <legend for="password">Lösenord (minst 8 tecken)</legend>
         <button
             type="button"
             id="showPassword"
             :class="showPassword ? 'green' : 'red'"
-            v-on:click="showPassword ? showPassword = false : showPassword = true">
-            <!-- {{ showPassword ? "visar" : "dolt" }} -->
+            @click="showPassword = showPassword ? false : true">
             <i v-if="showPassword" class="fas fa-eye"> visar</i>
             <i v-else class="fas fa-eye-slash"> dolt</i>
         </button>
-        <input :type=" showPassword ? 'text' : 'password' " name="password" id="password" required minlength="8">
+        <input
+            :type="showPassword ? 'text' : 'password'"
+            name="password"
+            class="password"
+            v-model="password" 
+            required minlength="8">
         <legend>Födelsedag</legend>
         <select name="year" v-model="selectedYear" required>
             <option disabled value="">År</option>
-            <option v-for="(n,index) in 120" :key="index" :value="date.getFullYear()-index">{{ date.getFullYear()-index }}</option>    
+            <option
+                v-for="(n,index) in 120"
+                :key="index"
+                :value="date.getFullYear()-index">
+                {{ date.getFullYear()-index }}
+            </option>    
         </select>
         <select name="month" v-model="selectedMonth" required>
             <option disabled value="">Månad</option>
@@ -37,43 +46,63 @@
         </select>
         <select name="day" v-model="selectedDay" required>
             <option disabled value="">Dag</option>
-            <option v-for="day in getDaysInMonth(selectedYear, selectedMonth)" :key="day" :value="('00' + day).slice(-2)">{{ ("00" + day).slice(-2) }}</option>
-        </select><br>
+            <option
+                v-for="day in getDaysInMonth(selectedYear, selectedMonth)"
+                :key="day"
+                :value="('00' + day).slice(-2)">{{ ("00" + day).slice(-2) }}
+            </option>
+        </select>
         <label for="gdrp">Godkänner du att vi inte följer GDPR?</label>
-        <button type="button" class="accept" v-on:click="accept ? accept=false : accept=true">
+        <button type="button" class="accept" @click="accept = accept ? false : true">
             <i v-if="accept" class="fas fa-check"></i>
             <i v-else class="fas fa-square-full"></i>
-            <input type="checkbox" class="hidden" required :value="accept" v-bind:checked="accept" tabindex="-1">
+            <input type="checkbox" class="hidden" required :value="accept" :checked="accept" tabindex="-1">
         </button>
-        <input type="submit" value="Registrera"><br>
-        <!-- <h1>{{ selectedYear + " " + selectedMonth + " " + selectedDay }}</h1> -->
-        <!-- <h1>{{ getDaysInMonth(selectedYear, selectedMonth) }}</h1> -->
+        <input type="submit" value="Registrera">
+        <br>
     </form>
+    <h2 v-if="message">{{ message }}</h2>
 </main>
 </template>
 
 <script>
 import Nav from './Nav.vue'
+import axios from 'axios'
 export default {
   name: 'Register',
   components: {
-    Nav,
+    Nav
   },
   methods: {
-    getDaysInMonth: function(year, month) {
+    getDaysInMonth(year, month) {
         return new Date(year, month, 0).getDate();
-    }
+    },
+    submitForm() {
+        axios.post('http://localhost:1337/register', {
+            name: this.name,
+            birth: `${this.selectedYear}${this.selectedMonth}${this.selectedDay}`,
+            email: this.email,
+            password: this.password
+        }).then(response => {
+            this.message = response.data.data.msg;
+        }).catch(e => {
+            this.message = e.response.data.data.msg;
+        });
+    },
   },
   data() {
     return {
         date: new Date(),
         months: [" januari "," februari "," mars "," april "," maj "," juni "," juli "," augusti "," september "," oktober"," november "," december "],
-        year: 2000,
-        showPassword: false,
+        accept: false,
+        showPassword: true,
+        name: "",
         selectedYear: '',
         selectedMonth: '',
         selectedDay: '',
-        accept: false,
+        email: "",
+        password: "",
+        message: ""
     }
   }
 }
@@ -81,10 +110,16 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-h2 {
-  text-transform: uppercase;
+legend {
+    margin-top: 1em;
 }
 
+legend:after {
+    content:':';
+}
+
+select,
+option,
 input {
     background-color: #fff;
     padding: 0.25em;
@@ -92,34 +127,12 @@ input {
     width: 100%;
 }
 
-legend:after {
-    content:':';
-}
-
-#password {
-    width: 80%;
-}
-
-#showPassword {
-    width: 20%;
-}
-
-.green {
-    background-color: lightgreen;
-}
-
-.red {
-    background-color: #faa;
-}
-
 select,
 option {
-    background-color: #fff;
-    padding: 0.25em;
-    font-size: 1.2em;
-    width: 15vw;
+    width: 33.33%;
     margin-bottom: 1em;
 }
+
 
 input[type=submit] {
     width: 15vw;
@@ -163,8 +176,20 @@ i {
     font-size: 1.0em;
 }
 
-legend {
-    margin-top: 1em;
+.password {
+    width: 80%;
+}
+
+#showPassword {
+    width: 20%;
+}
+
+.green {
+    background-color: lightgreen;
+}
+
+.red {
+    background-color: #faa;
 }
 
 .hidden {

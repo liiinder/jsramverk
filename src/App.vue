@@ -21,26 +21,32 @@ export default {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    background-color: #0074d9;
 }
+
 html {
     font-size: 100%;
     font-family: 'Inter UI', sans-serif;
+    background-color: #0074d9;
 }
+
 .app {
     width: 80vw;
     margin: 0 auto;
     padding: 2em 6em 8em;
     color: white;
 }
+
 h1 {
-    font-size: 8em;
+    font-size: 4em;
     font-weight: 100;
 }
+
 h2 {
-    font-size: 6em;
+    font-size: 3em;
     font-weight: 100;
+    text-transform: uppercase;
 }
+
 p {
     font-size: 2em;
     font-weight: normal;
