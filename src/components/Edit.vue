@@ -39,23 +39,25 @@ export default {
                 if (typeof response.data.data.report.text != "undefined") {
                     this.report = response.data.data.report.text;
                 }
-            }).catch(e => {
-                this.report = "<h2>Finns inget skrivet för denna vecka än.</h2>";
             });
+            // .catch(e => {
+            //     this.report = "<h2>Finns inget skrivet för denna vecka än.</h2>";
+            // });
         },
         saveReport() {
-            console.log(this.report);
+            // console.log(this.report);
             axios.post(`${this.$store.getters.apiURL}/reports`, {
                 report: this.report,
                 week: this.week
             }, {
                 headers: {'x-access-token': this.$store.getters.getToken}
-            }).then(response => {
-                console.log(JSON.stringify(response));
+            }).then(function() {
+                // console.log(JSON.stringify(response));
                 this.changeWeek(this.week);
-            }).catch(e => {
-                console.log(JSON.stringify(e));
             });
+            // .catch(e => {
+            //     console.log(JSON.stringify(e));
+            // });
         }
     },
     mounted() {

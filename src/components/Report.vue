@@ -37,9 +37,10 @@ export default {
                 if (typeof response.data.data.report.text != "undefined") {
                     this.report = response.data.data.report.text;
                 }
-            }).catch(e => {
-                this.report = "<h2>Finns inget skrivet för denna vecka än.</h2>";
             });
+            // .catch(e => {
+            //     this.report = "<h2>Finns inget skrivet för denna vecka än.</h2>";
+            // });
         }
     },
     mounted() {
