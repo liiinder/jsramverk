@@ -61,7 +61,7 @@ h3 {
     font-weight: normal;
 }
 
->>> p {
+div >>> p {
     margin-top: 0.5em;
     margin-bottom: 1em;
     font-size: 1.2em;
@@ -90,7 +90,7 @@ button {
     margin-top: 1em;
 }
 
->>> pre {
+div >>> pre {
     background: #f4f4f4;
     border: 1px solid #ddd;
     border-left: 3px solid #d900ff;
@@ -107,7 +107,7 @@ button {
     word-wrap: break-word;
 }
 
->>> a {
+div >>> a {
     color: #333;
 }
 </style>
