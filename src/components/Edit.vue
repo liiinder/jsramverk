@@ -34,7 +34,7 @@ export default {
     },
     methods: {
         changeWeek(week) {
-            axios.get(`http://localhost:1337/reports/week/${week}`)
+            axios.get(`${this.$store.getters.apiURL}/reports/week/${week}`)
             .then(response => {
                 if (typeof response.data.data.report.text != "undefined") {
                     this.report = response.data.data.report.text;
@@ -45,7 +45,7 @@ export default {
         },
         saveReport() {
             console.log(this.report);
-            axios.post(`http://localhost:1337/reports`, {
+            axios.post(`${this.$store.getters.apiURL}/reports`, {
                 report: this.report,
                 week: this.week
             }, {

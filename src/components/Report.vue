@@ -32,7 +32,7 @@ export default {
     },
     methods: {
         changeWeek(week) {
-            axios.get(`http://localhost:1337/reports/week/${week}`)
+            axios.get(`${this.$store.getters.apiURL}/reports/week/${week}`)
             .then(response => {
                 if (typeof response.data.data.report.text != "undefined") {
                     this.report = response.data.data.report.text;

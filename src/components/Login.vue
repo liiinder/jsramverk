@@ -35,7 +35,7 @@ export default {
     },
     methods: {
         submitForm() {
-            axios.post('http://localhost:1337/login', {
+            axios.post(`${this.$store.getters.apiURL}/login`, {
                 email: this.email,
                 password: this.password
             }).then(response => {

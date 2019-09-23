@@ -28,7 +28,7 @@ export default {
   methods: {
     getMe() {
       let that = this;
-      fetch("http://localhost:1337")
+      fetch(`${this.$store.getters.apiURL}`)
       .then(function(response) {
           return response.json();
       })

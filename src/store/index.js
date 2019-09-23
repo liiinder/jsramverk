@@ -6,6 +6,7 @@ Vue.use(Vuex)
 export default new Vuex.Store({
     state: {
         token: "",
+        apiURL: "http://localhost:1337"
     },
 
     mutations: { // syncronus
@@ -23,6 +24,9 @@ export default new Vuex.Store({
     getters: {
         getToken(state) {
             return state.token;
+        },
+        apiURL(state) {
+            return state.apiURL;
         }
     },
 });

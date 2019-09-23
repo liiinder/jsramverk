@@ -78,7 +78,7 @@ export default {
         return new Date(year, month, 0).getDate();
     },
     submitForm() {
-        axios.post('http://localhost:1337/register', {
+        axios.post(`${this.$store.getters.apiURL}/register`, {
             name: this.name,
             birth: `${this.selectedYear}${this.selectedMonth}${this.selectedDay}`,
             email: this.email,
