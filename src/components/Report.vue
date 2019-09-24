@@ -92,10 +92,10 @@ button {
 }
 
 div >>> pre {
-    background: #f4f4f4;
-    border: 1px solid #ddd;
-    border-left: 3px solid #d900ff;
-    color: #666;
+    background: #666;
+    border: 1px solid #333;
+    border-left: 3px solid #cfcfcf;
+    color: #f4f4f4;
     page-break-inside: avoid;
     font-family: monospace;
     font-size: 15px;
@@ -106,6 +106,13 @@ div >>> pre {
     padding: 1em 1.5em;
     display: block;
     word-wrap: break-word;
+}
+
+div >>> code {
+    background: #666;
+    border: 1px solid #333;
+    color: #f4f4f4;
+    padding: 0 0.5em;
 }
 
 div >>> a {

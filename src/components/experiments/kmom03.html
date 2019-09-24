@@ -1,0 +1,21 @@
+<h2>Kmom03: Backend</h2>
+<p>
+    Lärorikt men väldigt för stort kursmoment som börjar närma sig 60 arbetstimmar.
+    Det va kul att få börja använda riktiga grejer droplet servern från digitalocean och dns namnet från namecheap.
+    Största strulet jag hade i slutet var att få till mina nginx config filer det tog närmare 5 timmar att lösa.
+    När jag körde <code>sudo certbot --nginx</code> så skapades en redirect loop i min me-api fil och min vanliga server vägrade.
+</p>
+<p>
+    Det tog väldigt lång tid innan jag förstod hur ENV variablerna fungerade.
+    Känns som guiden kan vara lite tydligare där.
+    Jag använde tmux och körde servern i bakgrunden, la in min env variabel men fick ingen skillnad.
+    Slutade med att jag hittade Dotenv som gjorde att jag kunde spara alla env variabler i en fil istället.
+</p>
+<p>
+    För att få redovisningen sparad i databasen valde jag att spara den med ett veckonummer och sedan hela redovisningen i ett text fält.
+    Då det bara finns 7 olika redovisningar (8 med default sidan) så la jag till dom i migrate.sql och kör enbart en update på dessa fälten när man ändrar dom.
+    Ville sedan få lite formatering på det hela och hittade v-html som gjorde att jag kunde spara ner min redovisning i html och sedan hämta hem den.
+    Dock eftersom den komponentens css style är scopet så var jag tvungen att skicka ner det med hjälp av >>>.
+    Tror dock jag kan skapa min stil i app.js istället som inte använder sig av keywordet scope.
+    För api anrop använder jag axios och det har fungerat felfritt. Har dock haft svårt för att komma på vad jag ska använda responsen/errorsena till men det lär man väl komma på så småningom.
+</p>

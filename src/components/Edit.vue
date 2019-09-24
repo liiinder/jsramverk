@@ -51,10 +51,11 @@ export default {
                 week: this.week
             }, {
                 headers: {'x-access-token': this.$store.getters.getToken}
-            }).then(function() {
-                // console.log(JSON.stringify(response));
-                this.changeWeek(this.week);
             });
+            // .then(function() {
+                // console.log(JSON.stringify(response));
+                // this.changeWeek(this.week);
+            // });
             // .catch(e => {
             //     console.log(JSON.stringify(e));
             // });
