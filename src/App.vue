@@ -1,4 +1,3 @@
-  
 <template>
   <div id="app" class="app">
     <link rel="stylesheet" 

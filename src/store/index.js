@@ -12,13 +12,13 @@ export default new Vuex.Store({
     mutations: { // syncronus
         setToken(state, token) {
             state.token = token;
-        }
+        },
     },
 
     actions: { // asyncronous
         setToken(state, token) {
             state.commit("setToken", token);
-        }
+        },
     },
 
     getters: {

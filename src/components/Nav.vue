@@ -5,6 +5,7 @@
         <li><router-link to="/reports/week/0">Redovisningar</router-link></li>
         <li><router-link to="/register">Registrera</router-link></li>
         <li><router-link to="/login">Logga in</router-link></li>
+        <li><router-link to="/chat">Chat</router-link></li>
     </ul>
 </nav>
 </template>
@@ -21,7 +22,7 @@ export default {
 ul {
     list-style-type: none;
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
 }
 
 li {
@@ -33,12 +34,12 @@ li a {
     text-decoration: none;
     color: white;
     font-size: 1.4em;
-    border: 4px solid #0be6d7;
+    border: 3px solid #0be6d7;
     background-color: #ddd;
     color: #333;
     font-weight: bold;
-    border-radius: 0.15em;
-    padding: 0.5em 0.8em;
+    border-radius: 0.10em;
+    padding: 0.2em 0.5em;
 }
 
 li a:hover {
