@@ -5,20 +5,20 @@
             <h2 v-if="ready">Chat Group</h2>
             <h2 v-else>Välkommen</h2>
             <hr>
-            <div v-for="mess in messages" :key="mess.sent.time">
-                <div :class="mess.user==user?'right':'left'" :title="mess.sent.full" class="message" v-if="mess.type=='message'">
-                    <div>
-                        <div>
+            <div v-for="mess in messages" :key="mess.sent.milli">
+                <div class="msg-row" :class="mess.user==user?'right':'left'" :title="mess.sent.full" v-if="mess.type=='message'">
+                    <div class="msg-wrap">
+                        <div class="msg-box">
                             <p class="user">{{ mess.user }}</p>
-                            <p class="mess">{{ mess.message }}</p>
+                            <p class="msg">{{ mess.message }}</p>
                         </div>
-                        <p class="message-time">
+                        <p class="msg-time">
                             {{ mess.sent.time }}
                         </p>
                     </div>
                 </div>
-                <div v-else-if="mess.type=='join'" class="joined">
-                    <p :title="mess.sent.full">{{ mess.sent.time }} {{ mess.user }} joined the chat </p>
+                <div v-else-if="mess.type=='join'||mess.type=='left'" :class="mess.type=='join'?'joined':'dced'">
+                    <p :title="mess.sent.full">{{ mess.sent.time }} {{ mess.user }} {{ mess.message }}</p>
                 </div>
             </div>
             <div v-if="ready">
@@ -60,11 +60,18 @@ export default {
     },
     methods: {
         getTime() {
-            const d = new Date()
+            let d = new Date();
 
             return {
-                time: d.toLocaleTimeString('sv-SE'),
-                full: d.toLocaleString('sv-SE')
+                time: ('0' + d.getHours()).slice(-2) + ":" +
+                    ('0' + d.getMinutes()).slice(-2),
+                full: d.getFullYear() + "-" +
+                    ('0' + (d.getMonth() + 1)).slice(-2) + "-" +
+                    ('0' + d.getDate()).slice(-2) + " " +
+                    ('0' + d.getHours()).slice(-2) + ":" +
+                    ('0' + d.getMinutes()).slice(-2) + ":" +
+                    ('0' + d.getSeconds()).slice(-2),
+                milli: d.getTime()
             }
         },
         joinChat(e) {
@@ -95,8 +102,11 @@ export default {
     mounted() {
         this.socket.on('server-sends', (data) => {
             if (this.ready) {
+                if (data.type === "left") {
+                    data.sent = this.getTime();
+                }
                 this.messages.push(data)
-            };
+            }
         });
         this.socket.on('username-result', (check) => {
             this.ready = check;
@@ -115,6 +125,10 @@ export default {
 
 hr {
     margin-bottom: 1em;
+}
+
+p {
+    font-size: 1em;
 }
 
 form {
@@ -144,25 +158,21 @@ button {
     border-bottom: 1px solid rgb(80, 250, 132);
 }
 
-.message div {
+.msg-row {
+    margin: 0.6em 0;
+}
+
+.msg-wrap {
     display: inline-block;
     padding: 0.5em 0.25em;
     min-width: 200px;
     max-width: 80%;
 }
 
-.message div div {
+.msg-box {
+    padding: 0.75em;
     border-radius: 0.25em;
     background-color: rgb(36, 38, 49);
-}
-
-.message div p {
-    padding: 0;
-    margin: 0;
-}
-
-p {
-    font-size: 1em;
 }
 
 .user {
@@ -180,15 +190,24 @@ p {
     text-align: right;
 }
 
-.right .message-time {
+.right .msg-time {
     text-align: left;
 }
 
-.joined {
+.joined,
+.dced {
     text-align: center;
 }
 
-.message-time {
+.joined {
+    color: rgb(80, 250, 132);
+}
+
+.dced {
+    color: rgb(250, 80, 80);
+}
+
+.msg-time {
     font-family: monospace;
     font-size: 1em;
     text-align: right;
