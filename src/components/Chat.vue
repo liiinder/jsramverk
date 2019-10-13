@@ -5,20 +5,20 @@
             <h2 v-if="ready">Chat Group</h2>
             <h2 v-else>Välkommen</h2>
             <hr>
-            <div v-for="mess in messages" :key="mess.sent.milli">
-                <div class="msg-row" :class="mess.user==user?'right':'left'" :title="mess.sent.full" v-if="mess.type=='message'">
+            <div v-for="mess in messages" :key="mess.sent">
+                <div class="msg-row" :class="mess.user==user?'right':'left'" :title="formatDate(mess.sent)" v-if="mess.type=='message'">
                     <div class="msg-wrap">
                         <div class="msg-box">
                             <p class="user">{{ mess.user }}</p>
                             <p class="msg">{{ mess.message }}</p>
                         </div>
                         <p class="msg-time">
-                            {{ mess.sent.time }}
+                            {{ formatTime(mess.sent) }}
                         </p>
                     </div>
                 </div>
                 <div v-else-if="mess.type=='join'||mess.type=='left'" :class="mess.type=='join'?'joined':'dced'">
-                    <p :title="mess.sent.full">{{ mess.sent.time }} {{ mess.user }} {{ mess.message }}</p>
+                    <p :title="formatDate(mess.sent)">{{ formatTime(mess.sent) }} {{ mess.user }} {{ mess.message }}</p>
                 </div>
             </div>
             <div v-if="ready">
@@ -27,6 +27,8 @@
                     <input type="text" v-model="message">
                     <button type="submit">Send</button>
                 </form>
+                <br>
+                <button @click="getMessages">{{ fetching ? "Hämtar meddelanden... Vänligen vänta" : "Klicka här för att hämta hem tidigare meddelanden." }}</button>
             </div>
             <div v-else>
                 <form @submit.prevent="joinChat">
@@ -50,36 +52,38 @@ export default {
     },
     data() {
         return {
+            fetching: false,
             ready: false,
             duplicate: false,
             user: '',
             message: '',
             messages: [],
-            socket: io('https://chat.liiinder.me')
+            socket: io('http://localhost:8300')
         }
     },
     methods: {
-        getTime() {
-            let d = new Date();
+        formatTime(milliseconds) {
+            let d = (milliseconds) ? new Date(milliseconds) : new Date();
 
-            return {
-                time: ('0' + d.getHours()).slice(-2) + ":" +
-                    ('0' + d.getMinutes()).slice(-2),
-                full: d.getFullYear() + "-" +
-                    ('0' + (d.getMonth() + 1)).slice(-2) + "-" +
-                    ('0' + d.getDate()).slice(-2) + " " +
-                    ('0' + d.getHours()).slice(-2) + ":" +
-                    ('0' + d.getMinutes()).slice(-2) + ":" +
-                    ('0' + d.getSeconds()).slice(-2),
-                milli: d.getTime()
-            }
+            return ('0' + d.getHours()).slice(-2) + ":" +
+                    ('0' + d.getMinutes()).slice(-2);
+        },
+        formatDate(milliseconds) {
+            let d = (milliseconds) ? new Date(milliseconds) : new Date();
+
+            return d.getFullYear() + "-" +
+                ('0' + (d.getMonth() + 1)).slice(-2) + "-" +
+                ('0' + d.getDate()).slice(-2) + " " +
+                ('0' + d.getHours()).slice(-2) + ":" +
+                ('0' + d.getMinutes()).slice(-2) + ":" +
+                ('0' + d.getSeconds()).slice(-2);
         },
         joinChat(e) {
             e.preventDefault();
             if (this.user !== "") {
                 this.socket.emit('check-username', {
                     user: this.user,
-                    sent: this.getTime()
+                    sent: new Date().getTime()
                 });
             }
         },
@@ -87,7 +91,7 @@ export default {
             let data = {
                 user: this.user,
                 message: this.message,
-                sent: this.getTime(),
+                sent: new Date().getTime(),
                 type: "message"
             }
 
@@ -97,20 +101,25 @@ export default {
                 this.messages.push(data); // If the above was returned as a io.emit this isnt needed but this saves some network traffic.
                 this.message = '';
             }
-        }
+        },
+        getMessages() {
+            this.fetching = true;
+            this.socket.emit('get-messages');
+        },
     },
     mounted() {
         this.socket.on('server-sends', (data) => {
             if (this.ready) {
-                if (data.type === "left") {
-                    data.sent = this.getTime();
-                }
                 this.messages.push(data)
             }
         });
         this.socket.on('username-result', (check) => {
             this.ready = check;
             this.duplicate = !check;
+        });
+        this.socket.on('all-messages', (data) => {
+            this.messages = data;
+            this.fetching = false;
         });
     }
 }
